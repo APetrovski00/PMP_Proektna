@@ -44,4 +44,20 @@
     <string name="color">Боја</string>
     <string name="save_car">Зачувај кола</string>
     <string name="cancel">Откажи</string>
+    <string name="car_detail_title">Детали за кола</string>
+    <string name="car_info">Информации за колата</string>
+    <string name="worksheet_history">Историја на работни листови</string>
+    <string name="mechanic">Механичар</string>
+    <string name="date">Датум</string>
+    <string name="work_done">Извршена работа</string>
+    <string name="photo_attached">Додадена слика</string>
+    <string name="no_photo">Нема слика</string>
+    <string name="sample_year">2012</string>
+    <string name="sample_color">Сребрена</string>
+    <string name="sample_mechanic_one">Механичар: Стефан</string>
+    <string name="sample_mechanic_two">Механичар: Мартин</string>
+    <string name="sample_date_one">Датум: 06.06.2026</string>
+    <string name="sample_date_two">Датум: 18.05.2026</string>
+    <string name="sample_work_done_one">Заменето масло и филтер за масло. Проверени течности.</string>
+    <string name="sample_work_done_two">Проверени предни сопирачки и исчистен делот кај сопирачките.</string>
 </resources>
