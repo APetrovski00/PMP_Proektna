@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">AutoServiceLog</string>
+    <string name="welcome_title">AutoServiceLog</string>
+    <string name="welcome_subtitle">Сервисна историја за сопственици и механичари.</string>
+    <string name="welcome_body">Запишувај поправки, додавај работни белешки и чувај ја секоја сервисна евиденција на едно место.</string>
+    <string name="login_email">Е-пошта и лозинка</string>
+    <string name="login_google">Продолжи со Google</string>
+    <string name="login_facebook">Продолжи со Facebook</string>
+    <string name="login_anonymous">Продолжи како гостин</string>
+    <string name="owner_label">За сопственици</string>
+    <string name="mechanic_label">За механичари</string>
+    <string name="owner_description">Додај ги твоите коли и прегледај завршени работни листови.</string>
+    <string name="mechanic_description">Пребарај коли по регистрација и започни нова работа.</string>
+</resources>
