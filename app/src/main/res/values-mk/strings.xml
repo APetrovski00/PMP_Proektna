@@ -12,4 +12,17 @@
     <string name="mechanic_label">За механичари</string>
     <string name="owner_description">Додај ги твоите коли и прегледај завршени работни листови.</string>
     <string name="mechanic_description">Пребарај коли по регистрација и започни нова работа.</string>
+    <string name="owner_screen_title">Мои коли</string>
+    <string name="add_car">Додај кола</string>
+    <string name="car_plate_label">Регистрација</string>
+    <string name="car_vin_label">VIN</string>
+    <string name="car_worksheets_label">Работни листови</string>
+    <string name="sample_car_one">Volkswagen Golf</string>
+    <string name="sample_car_two">Opel Astra</string>
+    <string name="sample_plate_one">SK-1234-AB</string>
+    <string name="sample_plate_two">BT-5678-CD</string>
+    <string name="sample_vin_one">WVWZZZ1KZ6W000001</string>
+    <string name="sample_vin_two">W0L0AHL3560000002</string>
+    <string name="sample_worksheets_one">3 работни листови</string>
+    <string name="sample_worksheets_two">1 работен лист</string>
 </resources>

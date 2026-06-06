@@ -12,4 +12,17 @@
     <string name="mechanic_label">For mechanics</string>
     <string name="owner_description">Add your cars and view completed worksheets.</string>
     <string name="mechanic_description">Search cars by license plate and start new work.</string>
+    <string name="owner_screen_title">My cars</string>
+    <string name="add_car">Add car</string>
+    <string name="car_plate_label">Plate</string>
+    <string name="car_vin_label">VIN</string>
+    <string name="car_worksheets_label">Worksheets</string>
+    <string name="sample_car_one">Volkswagen Golf</string>
+    <string name="sample_car_two">Opel Astra</string>
+    <string name="sample_plate_one">SK-1234-AB</string>
+    <string name="sample_plate_two">BT-5678-CD</string>
+    <string name="sample_vin_one">WVWZZZ1KZ6W000001</string>
+    <string name="sample_vin_two">W0L0AHL3560000002</string>
+    <string name="sample_worksheets_one">3 worksheets</string>
+    <string name="sample_worksheets_two">1 worksheet</string>
 </resources>
