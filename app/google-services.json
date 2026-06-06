@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "77538872073",
+    "project_id": "autoservicelog",
+    "storage_bucket": "autoservicelog.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77538872073:android:f2f7b835d7fde02d9921d8",
+        "android_client_info": {
+          "package_name": "com.apetrovski.autoservicelog"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKGAB7V7rprxqD1_3j64pNfbULLC0pWNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
