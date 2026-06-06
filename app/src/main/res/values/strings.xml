@@ -78,4 +78,6 @@
     <string name="mechanic_role">Mechanic</string>
     <string name="back_to_login">Back to login</string>
     <string name="account_created_notification">Account has been created</string>
+    <string name="login_screen_title">Log in</string>
+    <string name="login">Log in</string>
 </resources>

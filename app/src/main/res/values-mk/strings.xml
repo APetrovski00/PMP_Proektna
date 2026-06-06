@@ -78,4 +78,6 @@
     <string name="mechanic_role">Механичар</string>
     <string name="back_to_login">Назад на најава</string>
     <string name="account_created_notification">Акаунтот е креиран</string>
+    <string name="login_screen_title">Најава</string>
+    <string name="login">Најави се</string>
 </resources>
