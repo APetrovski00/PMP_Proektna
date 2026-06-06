@@ -80,4 +80,9 @@
     <string name="account_created_notification">Акаунтот е креиран</string>
     <string name="login_screen_title">Најава</string>
     <string name="login">Најави се</string>
+    <string name="worksheet_detail_title">Детали за работен лист</string>
+    <string name="status_finished">Статус: Завршено</string>
+    <string name="finished_sample">Завршено: 06.06.2026</string>
+    <string name="photo">Слика</string>
+    <string name="photo_placeholder">Слика</string>
 </resources>
