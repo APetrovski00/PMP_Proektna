@@ -60,4 +60,13 @@
     <string name="sample_date_two">Датум: 18.05.2026</string>
     <string name="sample_work_done_one">Заменето масло и филтер за масло. Проверени течности.</string>
     <string name="sample_work_done_two">Проверени предни сопирачки и исчистен делот кај сопирачките.</string>
+    <string name="worksheet_screen_title">Работен лист</string>
+    <string name="status_ongoing">Статус: Во тек</string>
+    <string name="started_sample">Започнато: 06.06.2026</string>
+    <string name="work_description">Опис на работа</string>
+    <string name="work_description_hint">Напиши што е направено на колата</string>
+    <string name="photo_optional">Слика по избор</string>
+    <string name="add_photo">Додај слика</string>
+    <string name="save_note">Зачувај белешка</string>
+    <string name="finish_work">Заврши работа</string>
 </resources>

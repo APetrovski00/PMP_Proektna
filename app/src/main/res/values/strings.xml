@@ -60,4 +60,13 @@
     <string name="sample_date_two">Date: 18.05.2026</string>
     <string name="sample_work_done_one">Changed oil and oil filter. Checked fluid levels.</string>
     <string name="sample_work_done_two">Checked front brakes and cleaned brake area.</string>
+    <string name="worksheet_screen_title">Worksheet</string>
+    <string name="status_ongoing">Status: Ongoing</string>
+    <string name="started_sample">Started: 06.06.2026</string>
+    <string name="work_description">Work description</string>
+    <string name="work_description_hint">Write what was done on the car</string>
+    <string name="photo_optional">Photo optional</string>
+    <string name="add_photo">Add photo</string>
+    <string name="save_note">Save note</string>
+    <string name="finish_work">Finish work</string>
 </resources>
