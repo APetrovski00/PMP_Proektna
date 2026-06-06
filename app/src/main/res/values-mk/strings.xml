@@ -35,4 +35,13 @@
     <string name="recent_work_label">Последни работи</string>
     <string name="sample_recent_work_one">Замена на филтер за масло</string>
     <string name="sample_recent_work_two">Проверка на предни сопирачки</string>
+    <string name="add_car_screen_title">Додај кола</string>
+    <string name="license_plate">Регистрација</string>
+    <string name="make">Производител</string>
+    <string name="model">Модел</string>
+    <string name="year">Година</string>
+    <string name="vin">VIN</string>
+    <string name="color">Боја</string>
+    <string name="save_car">Зачувај кола</string>
+    <string name="cancel">Откажи</string>
 </resources>

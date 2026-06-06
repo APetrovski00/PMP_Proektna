@@ -35,4 +35,13 @@
     <string name="recent_work_label">Recent work</string>
     <string name="sample_recent_work_one">Oil filter replacement</string>
     <string name="sample_recent_work_two">Front brake inspection</string>
+    <string name="add_car_screen_title">Add car</string>
+    <string name="license_plate">License plate</string>
+    <string name="make">Manufacturer</string>
+    <string name="model">Model</string>
+    <string name="year">Year</string>
+    <string name="vin">VIN</string>
+    <string name="color">Color</string>
+    <string name="save_car">Save car</string>
+    <string name="cancel">Cancel</string>
 </resources>
