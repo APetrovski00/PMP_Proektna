@@ -69,4 +69,13 @@
     <string name="add_photo">Додај слика</string>
     <string name="save_note">Зачувај белешка</string>
     <string name="finish_work">Заврши работа</string>
+    <string name="signup_screen_title">Креирај акаунт</string>
+    <string name="email">Е-пошта</string>
+    <string name="password">Лозинка</string>
+    <string name="confirm_password">Потврди лозинка</string>
+    <string name="account_type">Тип на акаунт</string>
+    <string name="owner">Сопственик</string>
+    <string name="mechanic_role">Механичар</string>
+    <string name="back_to_login">Назад на најава</string>
+    <string name="account_created_notification">Акаунтот е креиран</string>
 </resources>

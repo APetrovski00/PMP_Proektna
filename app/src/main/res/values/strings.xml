@@ -69,4 +69,13 @@
     <string name="add_photo">Add photo</string>
     <string name="save_note">Save note</string>
     <string name="finish_work">Finish work</string>
+    <string name="signup_screen_title">Create account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="account_type">Account type</string>
+    <string name="owner">Owner</string>
+    <string name="mechanic_role">Mechanic</string>
+    <string name="back_to_login">Back to login</string>
+    <string name="account_created_notification">Account has been created</string>
 </resources>
