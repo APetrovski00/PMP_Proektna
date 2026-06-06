@@ -25,4 +25,14 @@
     <string name="sample_vin_two">W0L0AHL3560000002</string>
     <string name="sample_worksheets_one">3 worksheets</string>
     <string name="sample_worksheets_two">1 worksheet</string>
+    <string name="mechanic_screen_title">Mechanic</string>
+    <string name="search_plate_hint">Search by license plate</string>
+    <string name="search">Search</string>
+    <string name="search_result_label">Search result</string>
+    <string name="owner_name_label">Owner</string>
+    <string name="sample_owner_name">Aleksandar Petrovski</string>
+    <string name="start_work">Start work</string>
+    <string name="recent_work_label">Recent work</string>
+    <string name="sample_recent_work_one">Oil filter replacement</string>
+    <string name="sample_recent_work_two">Front brake inspection</string>
 </resources>
