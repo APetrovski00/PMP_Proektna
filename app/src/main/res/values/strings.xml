@@ -7,6 +7,7 @@
     <string name="login_google">Continue with Google</string>
     <string name="login_facebook">Continue with Facebook</string>
     <string name="login_anonymous">Continue as guest</string>
+    <string name="signup_email">Create account</string>
     <string name="owner_label">For car owners</string>
     <string name="mechanic_label">For mechanics</string>
     <string name="owner_description">Add your cars and view completed worksheets.</string>

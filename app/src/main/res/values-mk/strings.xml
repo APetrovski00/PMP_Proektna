@@ -7,6 +7,7 @@
     <string name="login_google">Продолжи со Google</string>
     <string name="login_facebook">Продолжи со Facebook</string>
     <string name="login_anonymous">Продолжи како гостин</string>
+    <string name="signup_email">Креирај акаунт</string>
     <string name="owner_label">За сопственици</string>
     <string name="mechanic_label">За механичари</string>
     <string name="owner_description">Додај ги твоите коли и прегледај завршени работни листови.</string>
