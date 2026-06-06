@@ -5,11 +5,7 @@ plugins {
 
 android {
     namespace = "com.apetrovski.autoservicelog"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.apetrovski.autoservicelog"
@@ -47,6 +43,8 @@ dependencies {
     implementation(libs.firebase.functions)
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.storage)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
