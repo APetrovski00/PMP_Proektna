@@ -1,7 +1,10 @@
 package com.apetrovski.autoservicelog.ui
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -24,6 +27,7 @@ class WorksheetDetailFragment : Fragment(R.layout.screen_worksheet_detail) {
     private var detailFinishedText: TextView? = null
     private var detailMechanicText: TextView? = null
     private var detailWorkDoneText: TextView? = null
+    private var detailPhotoImage: ImageView? = null
     private var photoPlaceholderText: TextView? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,6 +40,7 @@ class WorksheetDetailFragment : Fragment(R.layout.screen_worksheet_detail) {
         detailFinishedText = view.findViewById(R.id.detailFinishedText)
         detailMechanicText = view.findViewById(R.id.detailMechanicText)
         detailWorkDoneText = view.findViewById(R.id.detailWorkDoneText)
+        detailPhotoImage = view.findViewById(R.id.detailPhotoImage)
         photoPlaceholderText = view.findViewById(R.id.photoPlaceholderText)
     }
 
@@ -80,6 +85,7 @@ class WorksheetDetailFragment : Fragment(R.layout.screen_worksheet_detail) {
         detailFinishedText = null
         detailMechanicText = null
         detailWorkDoneText = null
+        detailPhotoImage = null
         photoPlaceholderText = null
         super.onDestroyView()
     }
@@ -96,11 +102,7 @@ class WorksheetDetailFragment : Fragment(R.layout.screen_worksheet_detail) {
         detailWorkDoneText?.text = worksheet.workDescription.ifBlank {
             getString(R.string.no_work_description)
         }
-        photoPlaceholderText?.text = if (worksheet.photoUrl.isBlank()) {
-            getString(R.string.no_photo)
-        } else {
-            getString(R.string.photo_attached)
-        }
+        showPhoto(worksheet.photoBase64)
 
         val finishedAt = worksheet.finishedAt
         if (finishedAt == null) {
@@ -109,6 +111,37 @@ class WorksheetDetailFragment : Fragment(R.layout.screen_worksheet_detail) {
             detailFinishedText?.visibility = View.VISIBLE
             detailFinishedText?.text = getString(R.string.finished_value, formatDate(finishedAt))
         }
+    }
+
+    private fun showPhoto(photoBase64: String) {
+        if (photoBase64.isBlank()) {
+            detailPhotoImage?.setImageDrawable(null)
+            detailPhotoImage?.visibility = View.GONE
+            photoPlaceholderText?.visibility = View.VISIBLE
+            photoPlaceholderText?.text = getString(R.string.no_photo)
+            return
+        }
+
+        try {
+            val bytes = Base64.decode(photoBase64, Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            if (bitmap == null) {
+                showPhotoLoadFailed()
+            } else {
+                detailPhotoImage?.setImageBitmap(bitmap)
+                detailPhotoImage?.visibility = View.VISIBLE
+                photoPlaceholderText?.visibility = View.GONE
+            }
+        } catch (_: Exception) {
+            showPhotoLoadFailed()
+        }
+    }
+
+    private fun showPhotoLoadFailed() {
+        detailPhotoImage?.setImageDrawable(null)
+        detailPhotoImage?.visibility = View.GONE
+        photoPlaceholderText?.visibility = View.VISIBLE
+        photoPlaceholderText?.text = getString(R.string.photo_load_failed)
     }
 
     private fun formatDate(time: Long): String {

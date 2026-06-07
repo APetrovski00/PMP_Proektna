@@ -97,6 +97,10 @@
     <string name="work_description_hint">Write what was done on the car</string>
     <string name="photo_optional">Photo optional</string>
     <string name="add_photo">Add photo</string>
+    <string name="take_photo">Take photo</string>
+    <string name="delete_photo">Delete photo</string>
+    <string name="selected_photo">Selected photo</string>
+    <string name="photo_select_failed">Photo could not be selected</string>
     <string name="save_note">Save</string>
     <string name="work_saved">Work saved</string>
     <string name="work_save_failed">Work could not be saved</string>
@@ -128,4 +132,5 @@
     <string name="finished_sample">Finished: 06.06.2026</string>
     <string name="photo">Photo</string>
     <string name="photo_placeholder">Photo</string>
+    <string name="photo_load_failed">Photo could not be loaded</string>
 </resources>

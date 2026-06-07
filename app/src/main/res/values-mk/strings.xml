@@ -124,6 +124,11 @@
     <string name="no_worksheets_yet">Нема работни листови</string>
     <string name="no_work_description">Нема опис на работа</string>
     <string name="finished_value">Завршено: %1$s</string>
+    <string name="take_photo">Сликај</string>
+    <string name="delete_photo">Избриши слика</string>
+    <string name="selected_photo">Избрана слика</string>
+    <string name="photo_select_failed">Сликата не може да се избере</string>
+    <string name="photo_load_failed">Сликата не може да се вчита</string>
     <plurals name="worksheet_count">
         <item quantity="one">%d работен лист</item>
         <item quantity="other">%d работни листови</item>

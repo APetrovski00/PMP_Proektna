@@ -19,7 +19,7 @@ data class WorksheetRecord(
     val vin: String,
     val status: String,
     val workDescription: String,
-    val photoUrl: String,
+    val photoBase64: String,
     val startedAt: Long,
     val finishedAt: Long?
 )
@@ -56,7 +56,7 @@ class WorksheetRepository(
             "vin" to car.vin,
             "status" to STATUS_ONGOING,
             "workDescription" to "",
-            "photoUrl" to "",
+            "photoBase64" to "",
             "startedAt" to now,
             "finishedAt" to null,
             "createdAt" to now,
@@ -131,24 +131,45 @@ class WorksheetRepository(
         workDescription: String,
         onResult: (Result<Unit>) -> Unit
     ) {
+        saveWorksheetUpdate(worksheetId, workDescription, null, onResult)
+    }
+
+    fun saveWorksheetUpdate(
+        worksheetId: String,
+        workDescription: String,
+        photoBase64: String?,
+        onResult: (Result<Unit>) -> Unit
+    ) {
+        saveWorksheetFields(worksheetId, workDescription, photoBase64, onResult)
+    }
+
+    private fun saveWorksheetFields(
+        worksheetId: String,
+        workDescription: String,
+        photoBase64: String?,
+        onResult: (Result<Unit>) -> Unit
+    ) {
         val worksheetDocument = firestore.collection(WORKSHEETS_COLLECTION).document(worksheetId)
 
         firestore.runTransaction { transaction ->
             val snapshot = transaction.get(worksheetDocument)
             val currentDescription = snapshot.getString("workDescription").orEmpty()
-            val updatedDescription = if (currentDescription.isBlank()) {
-                workDescription
-            } else {
-                "$currentDescription\n\n$workDescription"
+            val updates = mutableMapOf<String, Any>(
+                "updatedAt" to FieldValue.serverTimestamp()
+            )
+
+            if (workDescription.isNotBlank()) {
+                updates["workDescription"] = if (currentDescription.isBlank()) {
+                    workDescription
+                } else {
+                    "$currentDescription\n\n$workDescription"
+                }
+            }
+            if (photoBase64 != null) {
+                updates["photoBase64"] = photoBase64
             }
 
-            transaction.update(
-                worksheetDocument,
-                mapOf<String, Any>(
-                    "workDescription" to updatedDescription,
-                    "updatedAt" to FieldValue.serverTimestamp()
-                )
-            )
+            transaction.update(worksheetDocument, updates)
         }
             .addOnSuccessListener {
                 onResult(Result.success(Unit))
@@ -201,7 +222,7 @@ private fun com.google.firebase.firestore.DocumentSnapshot.toWorksheetRecord(): 
         vin = getString("vin").orEmpty(),
         status = getString("status").orEmpty(),
         workDescription = getString("workDescription").orEmpty(),
-        photoUrl = getString("photoUrl").orEmpty(),
+        photoBase64 = getString("photoBase64").orEmpty(),
         startedAt = getTimestamp("startedAt")?.toDate()?.time ?: 0L,
         finishedAt = getTimestamp("finishedAt")?.toDate()?.time
     )
