@@ -25,6 +25,12 @@
     <string name="sample_vin_two">W0L0AHL3560000002</string>
     <string name="sample_worksheets_one">3 worksheets</string>
     <string name="sample_worksheets_two">1 worksheet</string>
+    <string name="no_cars_yet">No cars added yet</string>
+    <string name="load_cars_failed">Cars could not be loaded</string>
+    <plurals name="worksheet_count">
+        <item quantity="one">%d worksheet</item>
+        <item quantity="other">%d worksheets</item>
+    </plurals>
     <string name="mechanic_screen_title">Mechanic</string>
     <string name="search_plate_hint">Search by license plate</string>
     <string name="search">Search</string>

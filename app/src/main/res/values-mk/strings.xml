@@ -98,4 +98,10 @@
     <string name="google_login_failed">Најавата со Google не успеа</string>
     <string name="google_config_missing">Google најавата уште не е конфигурирана</string>
     <string name="google_account_type_message">Избери како ќе се користи овој Google акаунт.</string>
+    <string name="no_cars_yet">Нема додадени коли</string>
+    <string name="load_cars_failed">Колите не може да се вчитаат</string>
+    <plurals name="worksheet_count">
+        <item quantity="one">%d работен лист</item>
+        <item quantity="other">%d работни листови</item>
+    </plurals>
 </resources>
