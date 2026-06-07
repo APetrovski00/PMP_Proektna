@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.apetrovski.autoservicelog.R
+import com.apetrovski.autoservicelog.data.analytics.AppAnalytics
 import com.apetrovski.autoservicelog.data.auth.AuthRepository
 
 class LoginFragment : Fragment(R.layout.screen_login) {
@@ -42,6 +43,7 @@ class LoginFragment : Fragment(R.layout.screen_login) {
                 openCreateAccountButton.isEnabled = true
                 result
                     .onSuccess { profile ->
+                        AppAnalytics.loginSuccess(requireContext(), "email", profile.role)
                         when (profile.role) {
                             AuthRepository.ROLE_OWNER -> {
                                 navController.navigate(R.id.action_loginFragment_to_ownerFragment)

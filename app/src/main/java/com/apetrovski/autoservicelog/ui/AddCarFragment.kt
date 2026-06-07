@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.apetrovski.autoservicelog.R
+import com.apetrovski.autoservicelog.data.analytics.AppAnalytics
 import com.apetrovski.autoservicelog.data.cars.CarForm
 import com.apetrovski.autoservicelog.data.cars.CarRepository
 
@@ -47,6 +48,7 @@ class AddCarFragment : Fragment(R.layout.screen_add_car) {
                 setButtonsEnabled(saveCarButton, cancelAddCarButton, true)
                 result
                     .onSuccess {
+                        AppAnalytics.carAdded(requireContext())
                         showMessage(R.string.car_saved)
                         findNavController().navigateUp()
                     }

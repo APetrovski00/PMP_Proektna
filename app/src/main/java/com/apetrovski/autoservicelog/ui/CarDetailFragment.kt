@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.apetrovski.autoservicelog.R
+import com.apetrovski.autoservicelog.data.analytics.AppAnalytics
 import com.apetrovski.autoservicelog.data.cars.CarDetail
 import com.apetrovski.autoservicelog.data.cars.CarRepository
 import com.apetrovski.autoservicelog.data.worksheets.WorksheetRecord
@@ -143,6 +144,7 @@ class CarDetailFragment : Fragment(R.layout.screen_car_detail) {
             attributes.recycle()
             setPadding(0, dp(14), 0, dp(14))
             setOnClickListener {
+                AppAnalytics.worksheetOpened(requireContext())
                 findNavController().navigate(
                     R.id.action_carDetailFragment_to_worksheetDetailFragment,
                     Bundle().apply {

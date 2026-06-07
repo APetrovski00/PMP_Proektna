@@ -20,6 +20,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.apetrovski.autoservicelog.R
+import com.apetrovski.autoservicelog.data.analytics.AppAnalytics
 import com.apetrovski.autoservicelog.data.worksheets.WorksheetRecord
 import com.apetrovski.autoservicelog.data.worksheets.WorksheetRepository
 import com.google.firebase.firestore.ListenerRegistration
@@ -276,6 +277,7 @@ class WorksheetFragment : Fragment(R.layout.screen_worksheet) {
             setControlsEnabled(true)
             result
                 .onSuccess {
+                    AppAnalytics.workSaved(requireContext(), photoUri != null)
                     workDescriptionInput?.text?.clear()
                     clearSelectedPhoto()
                     showMessage(R.string.work_saved)
@@ -300,6 +302,7 @@ class WorksheetFragment : Fragment(R.layout.screen_worksheet) {
             setControlsEnabled(true)
             result
                 .onSuccess {
+                    AppAnalytics.workFinished(requireContext())
                     showMessage(R.string.work_finished)
                     findNavController().popBackStack()
                 }

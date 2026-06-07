@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.apetrovski.autoservicelog.R
+import com.apetrovski.autoservicelog.data.analytics.AppAnalytics
 import com.apetrovski.autoservicelog.data.cars.CarListItem
 import com.apetrovski.autoservicelog.data.cars.CarRepository
 import com.google.firebase.firestore.ListenerRegistration
@@ -87,6 +88,7 @@ class OwnerFragment : Fragment(R.layout.screen_owner) {
             attributes.recycle()
             setPadding(0, dp(14), 0, dp(14))
             setOnClickListener {
+                AppAnalytics.carOpened(requireContext())
                 findNavController().navigate(
                     R.id.action_ownerFragment_to_carDetailFragment,
                     Bundle().apply {

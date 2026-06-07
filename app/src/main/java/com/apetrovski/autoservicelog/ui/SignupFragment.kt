@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.apetrovski.autoservicelog.R
+import com.apetrovski.autoservicelog.data.analytics.AppAnalytics
 import com.apetrovski.autoservicelog.data.auth.AuthRepository
 
 class SignupFragment : Fragment(R.layout.screen_signup) {
@@ -65,6 +66,7 @@ class SignupFragment : Fragment(R.layout.screen_signup) {
                         backToLoginButton.isEnabled = true
                         result
                             .onSuccess {
+                                AppAnalytics.accountCreated(requireContext(), selectedRole)
                                 authRepository.logout()
                                 showMessage(R.string.account_created_notification)
                                 navController.navigate(R.id.action_signupFragment_to_welcomeFragment)

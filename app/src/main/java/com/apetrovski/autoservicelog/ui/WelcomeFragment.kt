@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.apetrovski.autoservicelog.R
+import com.apetrovski.autoservicelog.data.analytics.AppAnalytics
 import com.apetrovski.autoservicelog.data.auth.AuthRepository
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -77,6 +78,7 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
                         if (profile == null) {
                             showGoogleRoleDialog()
                         } else {
+                            AppAnalytics.loginSuccess(requireContext(), "google", profile.role)
                             navigateForRole(profile.role)
                         }
                     }
@@ -234,6 +236,8 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
 
             result
                 .onSuccess { profile ->
+                    AppAnalytics.accountCreated(requireContext(), profile.role)
+                    AppAnalytics.loginSuccess(requireContext(), "google", profile.role)
                     navigateForRole(profile.role)
                 }
                 .onFailure {

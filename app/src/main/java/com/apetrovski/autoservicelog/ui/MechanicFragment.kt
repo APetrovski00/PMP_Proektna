@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.apetrovski.autoservicelog.R
+import com.apetrovski.autoservicelog.data.analytics.AppAnalytics
 import com.apetrovski.autoservicelog.data.cars.CarListItem
 import com.apetrovski.autoservicelog.data.cars.CarRepository
 import com.apetrovski.autoservicelog.data.worksheets.WorksheetRepository
@@ -47,6 +48,7 @@ class MechanicFragment : Fragment(R.layout.screen_mechanic) {
                 searchButton.isEnabled = true
                 result
                     .onSuccess { car ->
+                        AppAnalytics.carSearch(requireContext(), car != null)
                         selectedCar = car
                         startWorkButton.isEnabled = car != null
                         if (car == null) {
@@ -89,6 +91,7 @@ class MechanicFragment : Fragment(R.layout.screen_mechanic) {
                 startWorkButton.isEnabled = selectedCar != null
                 result
                     .onSuccess { worksheetId ->
+                        AppAnalytics.workStarted(requireContext())
                         showMessage(R.string.work_started)
                         findNavController().navigate(
                             R.id.action_mechanicFragment_to_worksheetFragment,
