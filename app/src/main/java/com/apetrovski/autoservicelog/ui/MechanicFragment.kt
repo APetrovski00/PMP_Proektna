@@ -10,9 +10,11 @@ import androidx.navigation.fragment.findNavController
 import com.apetrovski.autoservicelog.R
 import com.apetrovski.autoservicelog.data.cars.CarListItem
 import com.apetrovski.autoservicelog.data.cars.CarRepository
+import com.apetrovski.autoservicelog.data.worksheets.WorksheetRepository
 
 class MechanicFragment : Fragment(R.layout.screen_mechanic) {
     private val carRepository = CarRepository()
+    private val worksheetRepository = WorksheetRepository()
     private var selectedCar: CarListItem? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,8 +73,34 @@ class MechanicFragment : Fragment(R.layout.screen_mechanic) {
             }
         }
 
-        view.findViewById<View>(R.id.startWorkButton).setOnClickListener {
-            findNavController().navigate(R.id.action_mechanicFragment_to_worksheetFragment)
+        startWorkButton.setOnClickListener {
+            val car = selectedCar
+            if (car == null) {
+                showMessage(R.string.search_for_car_hint)
+                return@setOnClickListener
+            }
+
+            searchButton.isEnabled = false
+            startWorkButton.isEnabled = false
+            worksheetRepository.startWorksheet(car) { result ->
+                if (!isAdded) return@startWorksheet
+
+                searchButton.isEnabled = true
+                startWorkButton.isEnabled = selectedCar != null
+                result
+                    .onSuccess { worksheetId ->
+                        showMessage(R.string.work_started)
+                        findNavController().navigate(
+                            R.id.action_mechanicFragment_to_worksheetFragment,
+                            Bundle().apply {
+                                putString(ARG_WORKSHEET_ID, worksheetId)
+                            }
+                        )
+                    }
+                    .onFailure {
+                        showMessage(R.string.start_work_failed)
+                    }
+            }
         }
     }
 
@@ -99,5 +127,9 @@ class MechanicFragment : Fragment(R.layout.screen_mechanic) {
 
     private fun showMessage(messageRes: Int) {
         Toast.makeText(requireContext(), messageRes, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        private const val ARG_WORKSHEET_ID = "worksheetId"
     }
 }
