@@ -80,6 +80,12 @@
     <string name="account_created_notification">Account has been created</string>
     <string name="login_screen_title">Log in</string>
     <string name="login">Log in</string>
+    <string name="login_failed">Login failed</string>
+    <string name="signup_failed">Account could not be created</string>
+    <string name="auth_fill_all_fields">Fill in all fields</string>
+    <string name="auth_passwords_do_not_match">Passwords do not match</string>
+    <string name="auth_choose_account_type">Choose an account type</string>
+    <string name="auth_unknown_role">Unknown account type</string>
     <string name="worksheet_detail_title">Worksheet details</string>
     <string name="status_finished">Status: Finished</string>
     <string name="finished_sample">Finished: 06.06.2026</string>

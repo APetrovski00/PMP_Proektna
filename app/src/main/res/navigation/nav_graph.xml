@@ -27,6 +27,9 @@
             android:id="@+id/action_loginFragment_to_ownerFragment"
             app:destination="@id/ownerFragment" />
         <action
+            android:id="@+id/action_loginFragment_to_mechanicFragment"
+            app:destination="@id/mechanicFragment" />
+        <action
             android:id="@+id/action_loginFragment_to_signupFragment"
             app:destination="@id/signupFragment" />
     </fragment>
