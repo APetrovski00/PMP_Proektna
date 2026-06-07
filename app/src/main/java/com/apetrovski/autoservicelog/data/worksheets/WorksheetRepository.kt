@@ -19,6 +19,7 @@ data class WorksheetRecord(
     val vin: String,
     val status: String,
     val workDescription: String,
+    val photoUrl: String,
     val startedAt: Long,
     val finishedAt: Long?
 )
@@ -99,25 +100,29 @@ class WorksheetRepository(
                     return@addSnapshotListener
                 }
 
-                onResult(
-                    Result.success(
-                        WorksheetRecord(
-                            id = snapshot.getString("id") ?: snapshot.id,
-                            carId = snapshot.getString("carId").orEmpty(),
-                            ownerId = snapshot.getString("ownerId").orEmpty(),
-                            mechanicId = snapshot.getString("mechanicId").orEmpty(),
-                            mechanicName = snapshot.getString("mechanicName").orEmpty(),
-                            manufacturer = snapshot.getString("manufacturer").orEmpty(),
-                            model = snapshot.getString("model").orEmpty(),
-                            licensePlate = snapshot.getString("licensePlate").orEmpty(),
-                            vin = snapshot.getString("vin").orEmpty(),
-                            status = snapshot.getString("status").orEmpty(),
-                            workDescription = snapshot.getString("workDescription").orEmpty(),
-                            startedAt = snapshot.getTimestamp("startedAt")?.toDate()?.time ?: 0L,
-                            finishedAt = snapshot.getTimestamp("finishedAt")?.toDate()?.time
-                        )
-                    )
-                )
+                onResult(Result.success(snapshot.toWorksheetRecord()))
+            }
+    }
+
+    fun observeWorksheetsForCar(
+        carId: String,
+        onResult: (Result<List<WorksheetRecord>>) -> Unit
+    ): ListenerRegistration {
+        return firestore.collection(WORKSHEETS_COLLECTION)
+            .whereEqualTo("carId", carId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    onResult(Result.failure(error))
+                    return@addSnapshotListener
+                }
+
+                val worksheets = snapshot
+                    ?.documents
+                    ?.map { document -> document.toWorksheetRecord() }
+                    ?.sortedByDescending { worksheet -> worksheet.startedAt }
+                    ?: emptyList()
+
+                onResult(Result.success(worksheets))
             }
     }
 
@@ -181,4 +186,23 @@ class WorksheetRepository(
         private const val CARS_COLLECTION = "cars"
         private const val WORKSHEETS_COLLECTION = "worksheets"
     }
+}
+
+private fun com.google.firebase.firestore.DocumentSnapshot.toWorksheetRecord(): WorksheetRecord {
+    return WorksheetRecord(
+        id = getString("id") ?: id,
+        carId = getString("carId").orEmpty(),
+        ownerId = getString("ownerId").orEmpty(),
+        mechanicId = getString("mechanicId").orEmpty(),
+        mechanicName = getString("mechanicName").orEmpty(),
+        manufacturer = getString("manufacturer").orEmpty(),
+        model = getString("model").orEmpty(),
+        licensePlate = getString("licensePlate").orEmpty(),
+        vin = getString("vin").orEmpty(),
+        status = getString("status").orEmpty(),
+        workDescription = getString("workDescription").orEmpty(),
+        photoUrl = getString("photoUrl").orEmpty(),
+        startedAt = getTimestamp("startedAt")?.toDate()?.time ?: 0L,
+        finishedAt = getTimestamp("finishedAt")?.toDate()?.time
+    )
 }

@@ -115,6 +115,15 @@
     <string name="google_account_type_message">Избери како ќе се користи овој Google акаунт.</string>
     <string name="no_cars_yet">Нема додадени коли</string>
     <string name="load_cars_failed">Колите не може да се вчитаат</string>
+    <string name="car_load_failed">Колата не може да се вчита</string>
+    <string name="license_plate_value">Регистрација: %1$s</string>
+    <string name="vin_value">VIN: %1$s</string>
+    <string name="year_value">Година: %1$d</string>
+    <string name="color_value">Боја: %1$s</string>
+    <string name="mechanic_value">Механичар: %1$s</string>
+    <string name="no_worksheets_yet">Нема работни листови</string>
+    <string name="no_work_description">Нема опис на работа</string>
+    <string name="finished_value">Завршено: %1$s</string>
     <plurals name="worksheet_count">
         <item quantity="one">%d работен лист</item>
         <item quantity="other">%d работни листови</item>

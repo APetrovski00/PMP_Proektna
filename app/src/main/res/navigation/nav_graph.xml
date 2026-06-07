@@ -76,6 +76,10 @@
         android:name="com.apetrovski.autoservicelog.ui.CarDetailFragment"
         android:label="@string/car_detail_title"
         tools:layout="@layout/screen_car_detail">
+        <argument
+            android:name="carId"
+            android:defaultValue=""
+            app:argType="string" />
         <action
             android:id="@+id/action_carDetailFragment_to_worksheetDetailFragment"
             app:destination="@id/worksheetDetailFragment" />
@@ -106,5 +110,10 @@
         android:id="@+id/worksheetDetailFragment"
         android:name="com.apetrovski.autoservicelog.ui.WorksheetDetailFragment"
         android:label="@string/worksheet_detail_title"
-        tools:layout="@layout/screen_worksheet_detail" />
+        tools:layout="@layout/screen_worksheet_detail">
+        <argument
+            android:name="worksheetId"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
 </navigation>

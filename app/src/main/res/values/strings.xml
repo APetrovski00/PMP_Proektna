@@ -27,6 +27,7 @@
     <string name="sample_worksheets_two">1 worksheet</string>
     <string name="no_cars_yet">No cars added yet</string>
     <string name="load_cars_failed">Cars could not be loaded</string>
+    <string name="car_load_failed">Car could not be loaded</string>
     <plurals name="worksheet_count">
         <item quantity="one">%d worksheet</item>
         <item quantity="other">%d worksheets</item>
@@ -65,6 +66,13 @@
     <string name="car_detail_title">Car details</string>
     <string name="car_info">Car info</string>
     <string name="worksheet_history">Worksheet history</string>
+    <string name="license_plate_value">License plate: %1$s</string>
+    <string name="vin_value">VIN: %1$s</string>
+    <string name="year_value">Year: %1$d</string>
+    <string name="color_value">Color: %1$s</string>
+    <string name="mechanic_value">Mechanic: %1$s</string>
+    <string name="no_worksheets_yet">No worksheets yet</string>
+    <string name="no_work_description">No work description</string>
     <string name="mechanic">Mechanic</string>
     <string name="date">Date</string>
     <string name="work_done">Work done</string>
@@ -83,6 +91,7 @@
     <string name="status_value">Status: %1$s</string>
     <string name="started_sample">Started: 06.06.2026</string>
     <string name="started_value">Started: %1$s</string>
+    <string name="finished_value">Finished: %1$s</string>
     <string name="worksheet_load_failed">Worksheet could not be loaded</string>
     <string name="work_description">Work description</string>
     <string name="work_description_hint">Write what was done on the car</string>

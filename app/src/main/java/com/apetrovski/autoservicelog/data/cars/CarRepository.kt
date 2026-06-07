@@ -28,6 +28,17 @@ data class CarListItem(
     val createdAt: Long
 )
 
+data class CarDetail(
+    val id: String,
+    val manufacturer: String,
+    val model: String,
+    val licensePlate: String,
+    val vin: String,
+    val year: Int,
+    val color: String,
+    val worksheetCount: Int
+)
+
 class CarRepository(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -146,6 +157,40 @@ class CarRepository(
             }
             .addOnFailureListener { error ->
                 onResult(Result.failure(error))
+            }
+    }
+
+    fun observeCar(
+        carId: String,
+        onResult: (Result<CarDetail?>) -> Unit
+    ): ListenerRegistration {
+        return firestore.collection(CARS_COLLECTION)
+            .document(carId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    onResult(Result.failure(error))
+                    return@addSnapshotListener
+                }
+
+                if (snapshot == null || !snapshot.exists()) {
+                    onResult(Result.success(null))
+                    return@addSnapshotListener
+                }
+
+                onResult(
+                    Result.success(
+                        CarDetail(
+                            id = snapshot.getString("id") ?: snapshot.id,
+                            manufacturer = snapshot.getString("manufacturer").orEmpty(),
+                            model = snapshot.getString("model").orEmpty(),
+                            licensePlate = snapshot.getString("licensePlate").orEmpty(),
+                            vin = snapshot.getString("vin").orEmpty(),
+                            year = snapshot.getLong("year")?.toInt() ?: 0,
+                            color = snapshot.getString("color").orEmpty(),
+                            worksheetCount = snapshot.getLong("worksheetCount")?.toInt() ?: 0
+                        )
+                    )
+                )
             }
     }
 

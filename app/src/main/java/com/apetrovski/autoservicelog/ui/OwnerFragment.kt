@@ -87,7 +87,12 @@ class OwnerFragment : Fragment(R.layout.screen_owner) {
             attributes.recycle()
             setPadding(0, dp(14), 0, dp(14))
             setOnClickListener {
-                findNavController().navigate(R.id.action_ownerFragment_to_carDetailFragment)
+                findNavController().navigate(
+                    R.id.action_ownerFragment_to_carDetailFragment,
+                    Bundle().apply {
+                        putString(ARG_CAR_ID, car.id)
+                    }
+                )
             }
 
             addView(createTextView("${car.manufacturer} ${car.model}", 18f, true))
@@ -152,5 +157,9 @@ class OwnerFragment : Fragment(R.layout.screen_owner) {
 
     private fun dp(value: Int): Int {
         return (value * resources.displayMetrics.density).toInt()
+    }
+
+    companion object {
+        private const val ARG_CAR_ID = "carId"
     }
 }
