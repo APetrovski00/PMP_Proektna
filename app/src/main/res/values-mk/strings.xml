@@ -29,7 +29,13 @@
     <string name="search_plate_hint">Пребарај по регистрација</string>
     <string name="search">Пребарај</string>
     <string name="search_result_label">Резултат</string>
+    <string name="search_for_car_hint">Пребарај кола по регистрација</string>
+    <string name="enter_license_plate">Внеси регистрација</string>
+    <string name="search_car_found">Колата е најдена</string>
+    <string name="car_not_found">Нема кола со таа регистрација</string>
+    <string name="search_car_failed">Пребарувањето не успеа</string>
     <string name="owner_name_label">Сопственик</string>
+    <string name="owner_result">Сопственик: %1$s</string>
     <string name="sample_owner_name">Александар Петровски</string>
     <string name="start_work">Започни работа</string>
     <string name="recent_work_label">Последни работи</string>

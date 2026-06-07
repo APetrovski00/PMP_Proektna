@@ -35,7 +35,13 @@
     <string name="search_plate_hint">Search by license plate</string>
     <string name="search">Search</string>
     <string name="search_result_label">Search result</string>
+    <string name="search_for_car_hint">Search for a car by license plate</string>
+    <string name="enter_license_plate">Enter a license plate</string>
+    <string name="search_car_found">Car found</string>
+    <string name="car_not_found">No car found for that license plate</string>
+    <string name="search_car_failed">Search failed</string>
     <string name="owner_name_label">Owner</string>
+    <string name="owner_result">Owner: %1$s</string>
     <string name="sample_owner_name">Aleksandar Petrovski</string>
     <string name="start_work">Start work</string>
     <string name="recent_work_label">Recent work</string>

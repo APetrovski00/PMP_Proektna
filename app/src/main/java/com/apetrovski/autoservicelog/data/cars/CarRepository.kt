@@ -17,6 +17,9 @@ data class CarForm(
 
 data class CarListItem(
     val id: String,
+    val ownerId: String,
+    val ownerName: String,
+    val ownerEmail: String,
     val manufacturer: String,
     val model: String,
     val licensePlate: String,
@@ -90,6 +93,9 @@ class CarRepository(
                     ?.map { document ->
                         CarListItem(
                             id = document.getString("id") ?: document.id,
+                            ownerId = document.getString("ownerId").orEmpty(),
+                            ownerName = document.getString("ownerName").orEmpty(),
+                            ownerEmail = document.getString("ownerEmail").orEmpty(),
                             manufacturer = document.getString("manufacturer").orEmpty(),
                             model = document.getString("model").orEmpty(),
                             licensePlate = document.getString("licensePlate").orEmpty(),
@@ -102,6 +108,44 @@ class CarRepository(
                     ?: emptyList()
 
                 onResult(Result.success(cars))
+            }
+    }
+
+    fun findCarByLicensePlate(
+        licensePlate: String,
+        onResult: (Result<CarListItem?>) -> Unit
+    ) {
+        val searchPlate = normalizeLicensePlate(licensePlate)
+        firestore.collection(CARS_COLLECTION)
+            .whereEqualTo("licensePlateSearch", searchPlate)
+            .limit(1)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val document = snapshot.documents.firstOrNull()
+                if (document == null) {
+                    onResult(Result.success(null))
+                    return@addOnSuccessListener
+                }
+
+                onResult(
+                    Result.success(
+                        CarListItem(
+                            id = document.getString("id") ?: document.id,
+                            ownerId = document.getString("ownerId").orEmpty(),
+                            ownerName = document.getString("ownerName").orEmpty(),
+                            ownerEmail = document.getString("ownerEmail").orEmpty(),
+                            manufacturer = document.getString("manufacturer").orEmpty(),
+                            model = document.getString("model").orEmpty(),
+                            licensePlate = document.getString("licensePlate").orEmpty(),
+                            vin = document.getString("vin").orEmpty(),
+                            worksheetCount = document.getLong("worksheetCount")?.toInt() ?: 0,
+                            createdAt = document.getTimestamp("createdAt")?.toDate()?.time ?: 0L
+                        )
+                    )
+                )
+            }
+            .addOnFailureListener { error ->
+                onResult(Result.failure(error))
             }
     }
 

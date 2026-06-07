@@ -55,9 +55,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchRow">
+        app:layout_constraintTop_toBottomOf="@id/searchRow"
+        tools:visibility="visible">
 
         <TextView
             android:layout_width="match_parent"
@@ -73,6 +75,7 @@
             android:background="@android:color/darker_gray" />
 
         <TextView
+            android:id="@+id/resultCarText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
@@ -81,6 +84,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/resultPlateText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
@@ -88,6 +92,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/resultVinText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -95,6 +100,7 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/resultOwnerText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -122,30 +128,10 @@
         app:layout_constraintTop_toBottomOf="@id/searchResult">
 
         <TextView
+            android:id="@+id/searchHintText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/recent_work_label"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/sample_recent_work_one"
-            android:textSize="15sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/darker_gray" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/sample_recent_work_two"
+            android:text="@string/search_for_car_hint"
             android:textSize="15sp" />
     </LinearLayout>
 
