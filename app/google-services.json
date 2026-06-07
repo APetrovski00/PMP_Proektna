@@ -12,7 +12,20 @@
           "package_name": "com.apetrovski.autoservicelog"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "77538872073-oggssgb4b0cngf6gfdoicdb0aciho4pc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apetrovski.autoservicelog",
+            "certificate_hash": "11f767b9396487d6609bb78752b0eeef1cd3813b"
+          }
+        },
+        {
+          "client_id": "77538872073-fh05qnj5dvgbhh624g29m3r5rgtju08b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDKGAB7V7rprxqD1_3j64pNfbULLC0pWNM"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "77538872073-fh05qnj5dvgbhh624g29m3r5rgtju08b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

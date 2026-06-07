@@ -16,6 +16,12 @@
         <action
             android:id="@+id/action_welcomeFragment_to_signupFragment"
             app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_ownerFragment"
+            app:destination="@id/ownerFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_mechanicFragment"
+            app:destination="@id/mechanicFragment" />
     </fragment>
 
     <fragment

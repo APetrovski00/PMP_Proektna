@@ -44,6 +44,7 @@
     <string name="color">Color</string>
     <string name="save_car">Save car</string>
     <string name="cancel">Cancel</string>
+    <string name="continue_action">Continue</string>
     <string name="car_detail_title">Car details</string>
     <string name="car_info">Car info</string>
     <string name="worksheet_history">Worksheet history</string>
@@ -86,6 +87,9 @@
     <string name="auth_passwords_do_not_match">Passwords do not match</string>
     <string name="auth_choose_account_type">Choose an account type</string>
     <string name="auth_unknown_role">Unknown account type</string>
+    <string name="google_login_failed">Google login failed</string>
+    <string name="google_config_missing">Google login is not configured yet</string>
+    <string name="google_account_type_message">Choose how this Google account will be used.</string>
     <string name="worksheet_detail_title">Worksheet details</string>
     <string name="status_finished">Status: Finished</string>
     <string name="finished_sample">Finished: 06.06.2026</string>

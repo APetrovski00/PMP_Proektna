@@ -44,6 +44,7 @@
     <string name="color">Боја</string>
     <string name="save_car">Зачувај кола</string>
     <string name="cancel">Откажи</string>
+    <string name="continue_action">Продолжи</string>
     <string name="car_detail_title">Детали за кола</string>
     <string name="car_info">Информации за колата</string>
     <string name="worksheet_history">Историја на работни листови</string>
@@ -91,4 +92,7 @@
     <string name="auth_passwords_do_not_match">Лозинките не се совпаѓаат</string>
     <string name="auth_choose_account_type">Избери тип на акаунт</string>
     <string name="auth_unknown_role">Непознат тип на акаунт</string>
+    <string name="google_login_failed">Најавата со Google не успеа</string>
+    <string name="google_config_missing">Google најавата уште не е конфигурирана</string>
+    <string name="google_account_type_message">Избери како ќе се користи овој Google акаунт.</string>
 </resources>
