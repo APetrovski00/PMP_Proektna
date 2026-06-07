@@ -43,6 +43,9 @@
     <string name="vin">VIN</string>
     <string name="color">Боја</string>
     <string name="save_car">Зачувај кола</string>
+    <string name="car_saved">Колата е зачувана</string>
+    <string name="save_car_failed">Колата не може да се зачува</string>
+    <string name="invalid_year">Внеси валидна година</string>
     <string name="cancel">Откажи</string>
     <string name="continue_action">Продолжи</string>
     <string name="car_detail_title">Детали за кола</string>

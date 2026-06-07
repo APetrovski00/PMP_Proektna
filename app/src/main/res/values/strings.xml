@@ -43,6 +43,9 @@
     <string name="vin">VIN</string>
     <string name="color">Color</string>
     <string name="save_car">Save car</string>
+    <string name="car_saved">Car saved</string>
+    <string name="save_car_failed">Car could not be saved</string>
+    <string name="invalid_year">Enter a valid year</string>
     <string name="cancel">Cancel</string>
     <string name="continue_action">Continue</string>
     <string name="car_detail_title">Car details</string>
