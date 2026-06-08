@@ -93,6 +93,9 @@
         <action
             android:id="@+id/action_mechanicFragment_to_worksheetFragment"
             app:destination="@id/worksheetFragment" />
+        <action
+            android:id="@+id/action_mechanicFragment_to_worksheetDetailFragment"
+            app:destination="@id/worksheetDetailFragment" />
     </fragment>
 
     <fragment
@@ -115,5 +118,16 @@
             android:name="worksheetId"
             android:defaultValue=""
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.apetrovski.autoservicelog.ui.ProfileFragment"
+        android:label="@string/profile_screen_title"
+        tools:layout="@layout/screen_profile">
+        <argument
+            android:name="showJobs"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
 </navigation>

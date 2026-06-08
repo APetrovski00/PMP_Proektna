@@ -35,8 +35,15 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
         val emailLoginButton = view.findViewById<View>(R.id.emailLoginButton)
         val googleLoginButton = view.findViewById<View>(R.id.googleLoginButton)
         val facebookLoginButton = view.findViewById<View>(R.id.facebookLoginButton)
+        val anonymousLoginButton = view.findViewById<View>(R.id.anonymousLoginButton)
         val signupButton = view.findViewById<View>(R.id.signupButton)
-        val authButtons = listOf(emailLoginButton, googleLoginButton, facebookLoginButton, signupButton)
+        val authButtons = listOf(
+            emailLoginButton,
+            googleLoginButton,
+            facebookLoginButton,
+            anonymousLoginButton,
+            signupButton
+        )
 
         emailLoginButton.setOnClickListener {
             navController.navigate(R.id.action_welcomeFragment_to_loginFragment)
@@ -46,6 +53,9 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
         }
         signupButton.setOnClickListener {
             navController.navigate(R.id.action_welcomeFragment_to_signupFragment)
+        }
+        anonymousLoginButton.setOnClickListener {
+            showMessage(R.string.anonymous_login_not_ready)
         }
     }
 

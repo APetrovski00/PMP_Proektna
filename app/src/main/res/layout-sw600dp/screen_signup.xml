@@ -27,10 +27,28 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/signupEmailInput"
+            android:id="@+id/signupFirstNameInput"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginTop="30dp"
+            android:hint="@string/first_name"
+            android:inputType="textPersonName"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/signupLastNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="14dp"
+            android:hint="@string/last_name"
+            android:inputType="textPersonName"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/signupEmailInput"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="14dp"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:singleLine="true" />

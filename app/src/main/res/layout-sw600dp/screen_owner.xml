@@ -15,6 +15,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/owner_screen_title"
         android:textSize="32sp"
+        android:visibility="gone"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/addCarButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,10 +26,11 @@
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_marginTop="32dp"
         android:text="@string/add_car"
         android:textAllCaps="false"
-        app:layout_constraintBaseline_toBaselineOf="@id/ownerTitleText"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/carListScroll"
@@ -40,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ownerTitleText">
+        app:layout_constraintTop_toBottomOf="@id/addCarButton">
 
         <LinearLayout
             android:id="@+id/carList"

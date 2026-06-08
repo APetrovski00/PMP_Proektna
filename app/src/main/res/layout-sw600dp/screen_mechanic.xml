@@ -15,6 +15,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/mechanic_screen_title"
         android:textSize="32sp"
+        android:visibility="gone"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +29,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mechanicTitleText">
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/plateSearchInput"
@@ -37,7 +38,7 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:hint="@string/search_plate_hint"
-            android:inputType="textCapCharacters"
+            android:inputType="text"
             android:singleLine="true" />
 
         <com.google.android.material.button.MaterialButton
@@ -117,22 +118,53 @@
             android:textAllCaps="false" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/recentWorkList"
+    <ScrollView
+        android:id="@+id/myJobsScroll"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_goneMarginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchResult">
 
-        <TextView
-            android:id="@+id/searchHintText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/search_for_car_hint"
-            android:textSize="15sp" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:paddingBottom="32dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/myJobsTitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/my_jobs"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/myJobsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/myJobsEmptyText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/no_jobs_yet"
+                android:textSize="17sp" />
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

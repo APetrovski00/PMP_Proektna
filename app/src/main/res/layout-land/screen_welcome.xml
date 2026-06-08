@@ -82,6 +82,15 @@
                 android:text="@string/login_facebook"
                 android:textAllCaps="false" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/anonymousLoginButton"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/login_anonymous"
+                android:textAllCaps="false" />
+
             <View
                 android:id="@+id/signupDivider"
                 android:layout_width="match_parent"

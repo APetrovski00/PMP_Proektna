@@ -1,5 +1,6 @@
 package com.apetrovski.autoservicelog.data.cars
 
+import com.apetrovski.autoservicelog.data.auth.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -54,32 +55,33 @@ class CarRepository(
         }
 
         val carDocument = firestore.collection(CARS_COLLECTION).document()
-        val ownerName = user.displayName ?: user.email.orEmpty()
-        val data = hashMapOf(
-            "id" to carDocument.id,
-            "ownerId" to user.uid,
-            "ownerName" to ownerName,
-            "ownerEmail" to user.email.orEmpty(),
-            "licensePlate" to car.licensePlate,
-            "licensePlateSearch" to normalizeLicensePlate(car.licensePlate),
-            "manufacturer" to car.manufacturer,
-            "model" to car.model,
-            "year" to car.year,
-            "vin" to car.vin,
-            "color" to car.color,
-            "worksheetCount" to 0,
-            "createdAt" to FieldValue.serverTimestamp(),
-            "updatedAt" to FieldValue.serverTimestamp()
-        )
+        loadUserDisplayName(user.uid, user.displayName, user.email.orEmpty()) { ownerName ->
+            val data = hashMapOf(
+                "id" to carDocument.id,
+                "ownerId" to user.uid,
+                "ownerName" to ownerName,
+                "ownerEmail" to user.email.orEmpty(),
+                "licensePlate" to car.licensePlate,
+                "licensePlateSearch" to normalizeLicensePlate(car.licensePlate),
+                "manufacturer" to car.manufacturer,
+                "model" to car.model,
+                "year" to car.year,
+                "vin" to car.vin,
+                "color" to car.color,
+                "worksheetCount" to 0,
+                "createdAt" to FieldValue.serverTimestamp(),
+                "updatedAt" to FieldValue.serverTimestamp()
+            )
 
-        carDocument
-            .set(data)
-            .addOnSuccessListener {
-                onResult(Result.success(Unit))
-            }
-            .addOnFailureListener { error ->
-                onResult(Result.failure(error))
-            }
+            carDocument
+                .set(data)
+                .addOnSuccessListener {
+                    onResult(Result.success(Unit))
+                }
+                .addOnFailureListener { error ->
+                    onResult(Result.failure(error))
+                }
+        }
     }
 
     fun observeCurrentOwnerCars(
@@ -200,7 +202,30 @@ class CarRepository(
             .uppercase(Locale.ROOT)
     }
 
+    private fun loadUserDisplayName(
+        uid: String,
+        firebaseDisplayName: String?,
+        email: String,
+        onLoaded: (String) -> Unit
+    ) {
+        firestore.collection(USERS_COLLECTION)
+            .document(uid)
+            .get()
+            .addOnSuccessListener { document ->
+                onLoaded(
+                    AuthRepository.formatProfileName(
+                        document.getString("displayName") ?: firebaseDisplayName,
+                        email
+                    )
+                )
+            }
+            .addOnFailureListener {
+                onLoaded(AuthRepository.formatProfileName(firebaseDisplayName, email))
+            }
+    }
+
     companion object {
         private const val CARS_COLLECTION = "cars"
+        private const val USERS_COLLECTION = "users"
     }
 }

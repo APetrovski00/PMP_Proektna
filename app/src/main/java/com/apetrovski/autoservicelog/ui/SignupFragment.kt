@@ -17,6 +17,8 @@ class SignupFragment : Fragment(R.layout.screen_signup) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val firstNameInput = view.findViewById<EditText>(R.id.signupFirstNameInput)
+        val lastNameInput = view.findViewById<EditText>(R.id.signupLastNameInput)
         val emailInput = view.findViewById<EditText>(R.id.signupEmailInput)
         val passwordInput = view.findViewById<EditText>(R.id.signupPasswordInput)
         val confirmPasswordInput = view.findViewById<EditText>(R.id.signupConfirmPasswordInput)
@@ -34,6 +36,8 @@ class SignupFragment : Fragment(R.layout.screen_signup) {
         }
 
         createAccountButton.setOnClickListener {
+            val firstName = firstNameInput.text.toString().trim()
+            val lastName = lastNameInput.text.toString().trim()
             val email = emailInput.text.toString().trim()
             val password = passwordInput.text.toString()
             val confirmPassword = confirmPasswordInput.text.toString()
@@ -44,7 +48,8 @@ class SignupFragment : Fragment(R.layout.screen_signup) {
             }
 
             when {
-                email.isBlank() || password.isBlank() || confirmPassword.isBlank() -> {
+                firstName.isBlank() || lastName.isBlank() ||
+                    email.isBlank() || password.isBlank() || confirmPassword.isBlank() -> {
                     showMessage(R.string.auth_fill_all_fields)
                 }
                 password != confirmPassword -> {
@@ -56,7 +61,7 @@ class SignupFragment : Fragment(R.layout.screen_signup) {
                 else -> {
                     createAccountButton.isEnabled = false
                     backToLoginButton.isEnabled = false
-                    authRepository.createAccount(email, password, selectedRole) { result ->
+                    authRepository.createAccount(email, password, firstName, lastName, selectedRole) { result ->
                         if (!isAdded) return@createAccount
                         if (navController.currentDestination?.id != R.id.signupFragment) {
                             return@createAccount

@@ -8,7 +8,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 data class AuthUserProfile(
     val uid: String,
     val email: String,
-    val role: String
+    val role: String,
+    val displayName: String = ""
 )
 
 class AuthRepository(
@@ -38,6 +39,8 @@ class AuthRepository(
     fun createAccount(
         email: String,
         password: String,
+        firstName: String,
+        lastName: String,
         role: String,
         onResult: (Result<AuthUserProfile>) -> Unit
     ) {
@@ -53,6 +56,7 @@ class AuthRepository(
                     "uid" to user.uid,
                     "email" to email,
                     "role" to role,
+                    "displayName" to buildDisplayName(firstName, lastName),
                     "createdAt" to FieldValue.serverTimestamp(),
                     "updatedAt" to FieldValue.serverTimestamp()
                 )
@@ -61,7 +65,7 @@ class AuthRepository(
                     .document(user.uid)
                     .set(profile)
                     .addOnSuccessListener {
-                        onResult(Result.success(AuthUserProfile(user.uid, email, role)))
+                        onResult(Result.success(AuthUserProfile(user.uid, email, role, buildDisplayName(firstName, lastName))))
                     }
                     .addOnFailureListener { error ->
                         onResult(Result.failure(error))
@@ -105,6 +109,32 @@ class AuthRepository(
         saveUserProfile(user.uid, user.email.orEmpty(), role, onResult)
     }
 
+    fun loadCurrentUserProfile(
+        onResult: (Result<AuthUserProfile>) -> Unit
+    ) {
+        val user = auth.currentUser
+        if (user == null) {
+            onResult(Result.failure(IllegalStateException("User not found")))
+            return
+        }
+
+        if (user.isAnonymous) {
+            onResult(
+                Result.success(
+                    AuthUserProfile(
+                        uid = user.uid,
+                        email = "",
+                        role = ROLE_ANONYMOUS,
+                        displayName = ANONYMOUS_DISPLAY_NAME
+                    )
+                )
+            )
+            return
+        }
+
+        loadUserProfile(user.uid, onResult)
+    }
+
     fun logout() {
         auth.signOut()
     }
@@ -125,7 +155,7 @@ class AuthRepository(
                     return@addOnSuccessListener
                 }
 
-                onResult(Result.success(AuthUserProfile(uid, email, role)))
+                onResult(Result.success(AuthUserProfile(uid, email, role, formatProfileName(document.getString("displayName"), email))))
             }
             .addOnFailureListener { error ->
                 onResult(Result.failure(error))
@@ -153,7 +183,7 @@ class AuthRepository(
                     return@addOnSuccessListener
                 }
 
-                onResult(Result.success(AuthUserProfile(uid, email, role)))
+                onResult(Result.success(AuthUserProfile(uid, email, role, formatProfileName(document.getString("displayName"), email))))
             }
             .addOnFailureListener { error ->
                 onResult(Result.failure(error))
@@ -170,6 +200,7 @@ class AuthRepository(
             "uid" to uid,
             "email" to email,
             "role" to role,
+            "displayName" to auth.currentUser?.displayName.orEmpty(),
             "createdAt" to FieldValue.serverTimestamp(),
             "updatedAt" to FieldValue.serverTimestamp()
         )
@@ -178,17 +209,66 @@ class AuthRepository(
             .document(uid)
             .set(profile)
             .addOnSuccessListener {
-                onResult(Result.success(AuthUserProfile(uid, email, role)))
+                onResult(Result.success(AuthUserProfile(uid, email, role, formatProfileName(auth.currentUser?.displayName, email))))
             }
             .addOnFailureListener { error ->
                 onResult(Result.failure(error))
             }
     }
 
+    private fun buildDisplayName(firstName: String, lastName: String): String {
+        return listOf(firstName.trim(), lastName.trim())
+            .filter { value -> value.isNotBlank() }
+            .map { value -> formatNamePart(value) }
+            .joinToString(" ")
+    }
+
+    private fun formatNamePart(value: String): String {
+        val trimmed = value.trim()
+        return trimmed.take(1).uppercase() + trimmed.drop(1).lowercase()
+    }
+
     companion object {
         const val ROLE_OWNER = "owner"
         const val ROLE_MECHANIC = "mechanic"
+        const val ROLE_ANONYMOUS = "anonymous"
 
+        private const val ANONYMOUS_DISPLAY_NAME = "Anonymous"
         private const val USERS_COLLECTION = "users"
+
+        fun formatProfileName(displayName: String?, email: String): String {
+            displayName?.trim()?.takeIf { value -> value.isNotBlank() }?.let { value ->
+                if (value.contains("@")) {
+                    return formatProfileName(null, value)
+                }
+                if (!value.contains(" ") && value.contains(".")) {
+                    val domain = email.substringAfter("@", "")
+                    return formatProfileName(null, "$value@$domain")
+                }
+                return value
+            }
+
+            val localPart = email.substringBefore("@").trim()
+            if (localPart.isBlank()) return ANONYMOUS_DISPLAY_NAME
+
+            val nameParts = localPart
+                .split('.', '_', '-')
+                .filter { part -> part.isNotBlank() }
+
+            if (nameParts.size >= 2) {
+                val domain = email.substringAfter("@", "")
+                val orderedParts = if (domain.contains("uklo", ignoreCase = true)) {
+                    nameParts.reversed()
+                } else {
+                    nameParts
+                }
+
+                return orderedParts.joinToString(" ") { part ->
+                    part.take(1).uppercase() + part.drop(1).lowercase()
+                }
+            }
+
+            return localPart
+        }
     }
 }

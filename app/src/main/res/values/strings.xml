@@ -6,7 +6,7 @@
     <string name="login_email">Email and password</string>
     <string name="login_google">Continue with Google</string>
     <string name="login_facebook">Continue with Facebook</string>
-    <string name="login_anonymous">Continue as guest</string>
+    <string name="login_anonymous">Anonymous login</string>
     <string name="signup_email">Create account</string>
     <string name="owner_label">For car owners</string>
     <string name="mechanic_label">For mechanics</string>
@@ -108,6 +108,8 @@
     <string name="work_finished">Work finished</string>
     <string name="finish_work_failed">Work could not be finished</string>
     <string name="signup_screen_title">Create account</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
@@ -133,4 +135,16 @@
     <string name="photo">Photo</string>
     <string name="photo_placeholder">Photo</string>
     <string name="photo_load_failed">Photo could not be loaded</string>
+    <string name="profile">Profile</string>
+    <string name="jobs">Jobs</string>
+    <string name="header_separator">|</string>
+    <string name="anonymous_user">Anonymous</string>
+    <string name="profile_screen_title">Profile</string>
+    <string name="profile_name">Name: %1$s</string>
+    <string name="profile_email">Email: %1$s</string>
+    <string name="profile_role">Account type: %1$s</string>
+    <string name="logout">Log out</string>
+    <string name="anonymous_login_not_ready">Anonymous login will be added later</string>
+    <string name="my_jobs">My jobs</string>
+    <string name="no_jobs_yet">No jobs yet</string>
 </resources>

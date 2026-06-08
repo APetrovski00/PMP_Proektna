@@ -6,7 +6,7 @@
     <string name="login_email">Е-пошта и лозинка</string>
     <string name="login_google">Продолжи со Google</string>
     <string name="login_facebook">Продолжи со Facebook</string>
-    <string name="login_anonymous">Продолжи како гостин</string>
+    <string name="login_anonymous">Анонимна најава</string>
     <string name="signup_email">Креирај акаунт</string>
     <string name="owner_label">За сопственици</string>
     <string name="mechanic_label">За механичари</string>
@@ -89,6 +89,8 @@
     <string name="work_finished">Работата е завршена</string>
     <string name="finish_work_failed">Работата не може да се заврши</string>
     <string name="signup_screen_title">Креирај акаунт</string>
+    <string name="first_name">Име</string>
+    <string name="last_name">Презиме</string>
     <string name="email">Е-пошта</string>
     <string name="password">Лозинка</string>
     <string name="confirm_password">Потврди лозинка</string>
@@ -129,6 +131,18 @@
     <string name="selected_photo">Избрана слика</string>
     <string name="photo_select_failed">Сликата не може да се избере</string>
     <string name="photo_load_failed">Сликата не може да се вчита</string>
+    <string name="profile">Профил</string>
+    <string name="jobs">Работи</string>
+    <string name="header_separator">|</string>
+    <string name="anonymous_user">Анонимен</string>
+    <string name="profile_screen_title">Профил</string>
+    <string name="profile_name">Име: %1$s</string>
+    <string name="profile_email">Е-пошта: %1$s</string>
+    <string name="profile_role">Тип на акаунт: %1$s</string>
+    <string name="logout">Одјави се</string>
+    <string name="anonymous_login_not_ready">Анонимната најава ќе се додаде подоцна</string>
+    <string name="my_jobs">Мои работи</string>
+    <string name="no_jobs_yet">Се уште нема работи</string>
     <plurals name="worksheet_count">
         <item quantity="one">%d работен лист</item>
         <item quantity="other">%d работни листови</item>

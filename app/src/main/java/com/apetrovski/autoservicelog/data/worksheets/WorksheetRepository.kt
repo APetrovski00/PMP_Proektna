@@ -1,5 +1,6 @@
 package com.apetrovski.autoservicelog.data.worksheets
 
+import com.apetrovski.autoservicelog.data.auth.AuthRepository
 import com.apetrovski.autoservicelog.data.cars.CarListItem
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -38,49 +39,50 @@ class WorksheetRepository(
             return
         }
 
-        val worksheetDocument = firestore.collection(WORKSHEETS_COLLECTION).document()
-        val now = Timestamp.now()
-        val mechanicName = mechanic.displayName ?: mechanic.email.orEmpty()
-        val worksheet = hashMapOf(
-            "id" to worksheetDocument.id,
-            "carId" to car.id,
-            "ownerId" to car.ownerId,
-            "ownerName" to car.ownerName,
-            "ownerEmail" to car.ownerEmail,
-            "mechanicId" to mechanic.uid,
-            "mechanicName" to mechanicName,
-            "mechanicEmail" to mechanic.email.orEmpty(),
-            "manufacturer" to car.manufacturer,
-            "model" to car.model,
-            "licensePlate" to car.licensePlate,
-            "vin" to car.vin,
-            "status" to STATUS_ONGOING,
-            "workDescription" to "",
-            "photoBase64" to "",
-            "startedAt" to now,
-            "finishedAt" to null,
-            "createdAt" to now,
-            "updatedAt" to now
-        )
-
-        val carDocument = firestore.collection(CARS_COLLECTION).document(car.id)
-        val batch = firestore.batch()
-        batch.set(worksheetDocument, worksheet)
-        batch.update(
-            carDocument,
-            mapOf<String, Any>(
-                "worksheetCount" to FieldValue.increment(1),
-                "updatedAt" to FieldValue.serverTimestamp()
+        loadUserDisplayName(mechanic.uid, mechanic.displayName, mechanic.email.orEmpty()) { mechanicName ->
+            val worksheetDocument = firestore.collection(WORKSHEETS_COLLECTION).document()
+            val now = Timestamp.now()
+            val worksheet = hashMapOf(
+                "id" to worksheetDocument.id,
+                "carId" to car.id,
+                "ownerId" to car.ownerId,
+                "ownerName" to car.ownerName,
+                "ownerEmail" to car.ownerEmail,
+                "mechanicId" to mechanic.uid,
+                "mechanicName" to mechanicName,
+                "mechanicEmail" to mechanic.email.orEmpty(),
+                "manufacturer" to car.manufacturer,
+                "model" to car.model,
+                "licensePlate" to car.licensePlate,
+                "vin" to car.vin,
+                "status" to STATUS_ONGOING,
+                "workDescription" to "",
+                "photoBase64" to "",
+                "startedAt" to now,
+                "finishedAt" to null,
+                "createdAt" to now,
+                "updatedAt" to now
             )
-        )
 
-        batch.commit()
-            .addOnSuccessListener {
-                onResult(Result.success(worksheetDocument.id))
-            }
-            .addOnFailureListener { error ->
-                onResult(Result.failure(error))
-            }
+            val carDocument = firestore.collection(CARS_COLLECTION).document(car.id)
+            val batch = firestore.batch()
+            batch.set(worksheetDocument, worksheet)
+            batch.update(
+                carDocument,
+                mapOf<String, Any>(
+                    "worksheetCount" to FieldValue.increment(1),
+                    "updatedAt" to FieldValue.serverTimestamp()
+                )
+            )
+
+            batch.commit()
+                .addOnSuccessListener {
+                    onResult(Result.success(worksheetDocument.id))
+                }
+                .addOnFailureListener { error ->
+                    onResult(Result.failure(error))
+                }
+        }
     }
 
     fun observeWorksheet(
@@ -110,6 +112,33 @@ class WorksheetRepository(
     ): ListenerRegistration {
         return firestore.collection(WORKSHEETS_COLLECTION)
             .whereEqualTo("carId", carId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    onResult(Result.failure(error))
+                    return@addSnapshotListener
+                }
+
+                val worksheets = snapshot
+                    ?.documents
+                    ?.map { document -> document.toWorksheetRecord() }
+                    ?.sortedByDescending { worksheet -> worksheet.startedAt }
+                    ?: emptyList()
+
+                onResult(Result.success(worksheets))
+            }
+    }
+
+    fun observeWorksheetsForCurrentMechanic(
+        onResult: (Result<List<WorksheetRecord>>) -> Unit
+    ): ListenerRegistration? {
+        val mechanic = auth.currentUser
+        if (mechanic == null) {
+            onResult(Result.failure(IllegalStateException("User not found")))
+            return null
+        }
+
+        return firestore.collection(WORKSHEETS_COLLECTION)
+            .whereEqualTo("mechanicId", mechanic.uid)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     onResult(Result.failure(error))
@@ -200,11 +229,34 @@ class WorksheetRepository(
             }
     }
 
+    private fun loadUserDisplayName(
+        uid: String,
+        firebaseDisplayName: String?,
+        email: String,
+        onLoaded: (String) -> Unit
+    ) {
+        firestore.collection(USERS_COLLECTION)
+            .document(uid)
+            .get()
+            .addOnSuccessListener { document ->
+                onLoaded(
+                    AuthRepository.formatProfileName(
+                        document.getString("displayName") ?: firebaseDisplayName,
+                        email
+                    )
+                )
+            }
+            .addOnFailureListener {
+                onLoaded(AuthRepository.formatProfileName(firebaseDisplayName, email))
+            }
+    }
+
     companion object {
         const val STATUS_ONGOING = "Ongoing"
         const val STATUS_FINISHED = "Finished"
 
         private const val CARS_COLLECTION = "cars"
+        private const val USERS_COLLECTION = "users"
         private const val WORKSHEETS_COLLECTION = "worksheets"
     }
 }
