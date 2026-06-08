@@ -89,7 +89,12 @@ class AuthRepository(
                     return@addOnSuccessListener
                 }
 
-                loadUserProfileIfExists(user.uid, onResult)
+                loadUserProfileIfExists(
+                    uid = user.uid,
+                    firebaseEmail = user.email.orEmpty(),
+                    firebaseDisplayName = user.displayName,
+                    onResult = onResult
+                )
             }
             .addOnFailureListener { error ->
                 onResult(Result.failure(error))
@@ -208,6 +213,8 @@ class AuthRepository(
 
     private fun loadUserProfileIfExists(
         uid: String,
+        firebaseEmail: String,
+        firebaseDisplayName: String?,
         onResult: (Result<AuthUserProfile?>) -> Unit
     ) {
         firestore.collection(USERS_COLLECTION)
@@ -219,15 +226,27 @@ class AuthRepository(
                     return@addOnSuccessListener
                 }
 
-                val email = document.getString("email")
+                val email = document.getString("email").orEmpty().ifBlank { firebaseEmail }
                 val role = document.getString("role")
 
-                if (email.isNullOrBlank() || role.isNullOrBlank()) {
-                    onResult(Result.failure(IllegalStateException("User profile is incomplete")))
+                if (role.isNullOrBlank()) {
+                    onResult(Result.success(null))
                     return@addOnSuccessListener
                 }
 
-                onResult(Result.success(AuthUserProfile(uid, email, role, formatProfileName(document.getString("displayName"), email))))
+                onResult(
+                    Result.success(
+                        AuthUserProfile(
+                            uid = uid,
+                            email = email,
+                            role = role,
+                            displayName = formatProfileName(
+                                document.getString("displayName") ?: firebaseDisplayName,
+                                email
+                            )
+                        )
+                    )
+                )
             }
             .addOnFailureListener { error ->
                 onResult(Result.failure(error))

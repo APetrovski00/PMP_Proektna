@@ -19,6 +19,7 @@ import com.apetrovski.autoservicelog.R
 import com.apetrovski.autoservicelog.data.analytics.AppAnalytics
 import com.apetrovski.autoservicelog.data.auth.AuthRepository
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import kotlinx.coroutines.launch
 
@@ -119,7 +120,7 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
 
     private suspend fun getGoogleIdToken(webClientId: String): String? {
         val credential = runCatching {
-            getGoogleCredential(webClientId, filterByAuthorizedAccounts = true)
+            getSignInWithGoogleCredential(webClientId)
         }.getOrElse {
             runCatching {
                 getGoogleCredential(webClientId, filterByAuthorizedAccounts = false)
@@ -129,6 +130,15 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
         }
 
         return readGoogleIdToken(credential)
+    }
+
+    private suspend fun getSignInWithGoogleCredential(webClientId: String): Credential {
+        val googleSignInOption = GetSignInWithGoogleOption.Builder(webClientId).build()
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(googleSignInOption)
+            .build()
+
+        return credentialManager.getCredential(requireContext(), request).credential
     }
 
     private suspend fun getGoogleCredential(

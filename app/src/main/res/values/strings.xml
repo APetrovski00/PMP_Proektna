@@ -146,4 +146,8 @@
     <string name="logout">Log out</string>
     <string name="my_jobs">My jobs</string>
     <string name="no_jobs_yet">No jobs yet</string>
+    <string name="notification_channel_name">Work updates</string>
+    <string name="notification_work_started_title">Work started</string>
+    <string name="notification_work_started_body">Work on your car has started.</string>
+    <string name="notification_work_started_owner_body">Work on %1$s has started by %2$s.</string>
 </resources>

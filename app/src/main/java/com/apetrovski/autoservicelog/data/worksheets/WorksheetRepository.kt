@@ -65,8 +65,24 @@ class WorksheetRepository(
             )
 
             val carDocument = firestore.collection(CARS_COLLECTION).document(car.id)
+            val notificationDocument = firestore.collection(NOTIFICATIONS_COLLECTION).document()
+            val notification = hashMapOf(
+                "id" to notificationDocument.id,
+                "ownerId" to car.ownerId,
+                "worksheetId" to worksheetDocument.id,
+                "carId" to car.id,
+                "mechanicName" to mechanicName,
+                "manufacturer" to car.manufacturer,
+                "model" to car.model,
+                "licensePlate" to car.licensePlate,
+                "type" to "work_started",
+                "delivered" to false,
+                "createdAt" to now
+            )
+
             val batch = firestore.batch()
             batch.set(worksheetDocument, worksheet)
+            batch.set(notificationDocument, notification)
             batch.update(
                 carDocument,
                 mapOf<String, Any>(
@@ -256,6 +272,7 @@ class WorksheetRepository(
         const val STATUS_FINISHED = "Finished"
 
         private const val CARS_COLLECTION = "cars"
+        private const val NOTIFICATIONS_COLLECTION = "notifications"
         private const val USERS_COLLECTION = "users"
         private const val WORKSHEETS_COLLECTION = "worksheets"
     }

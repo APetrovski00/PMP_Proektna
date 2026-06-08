@@ -142,6 +142,10 @@
     <string name="logout">Одјави се</string>
     <string name="my_jobs">Мои работи</string>
     <string name="no_jobs_yet">Се уште нема работи</string>
+    <string name="notification_channel_name">Известувања за работа</string>
+    <string name="notification_work_started_title">Работата е започната</string>
+    <string name="notification_work_started_body">Работата на твојата кола е започната.</string>
+    <string name="notification_work_started_owner_body">Работата на %1$s е започната од %2$s.</string>
     <plurals name="worksheet_count">
         <item quantity="one">%d работен лист</item>
         <item quantity="other">%d работни листови</item>
