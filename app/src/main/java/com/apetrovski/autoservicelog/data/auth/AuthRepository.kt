@@ -1,6 +1,7 @@
 package com.apetrovski.autoservicelog.data.auth
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -81,6 +82,31 @@ class AuthRepository(
         onResult: (Result<AuthUserProfile?>) -> Unit
     ) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnSuccessListener { result ->
+                val user = result.user
+                if (user == null) {
+                    onResult(Result.failure(IllegalStateException("User not found")))
+                    return@addOnSuccessListener
+                }
+
+                loadUserProfileIfExists(
+                    uid = user.uid,
+                    firebaseEmail = user.email.orEmpty(),
+                    firebaseDisplayName = user.displayName,
+                    onResult = onResult
+                )
+            }
+            .addOnFailureListener { error ->
+                onResult(Result.failure(error))
+            }
+    }
+
+    fun loginWithFacebook(
+        accessToken: String,
+        onResult: (Result<AuthUserProfile?>) -> Unit
+    ) {
+        val credential = FacebookAuthProvider.getCredential(accessToken)
         auth.signInWithCredential(credential)
             .addOnSuccessListener { result ->
                 val user = result.user
@@ -196,10 +222,10 @@ class AuthRepository(
             .document(uid)
             .get()
             .addOnSuccessListener { document ->
-                val email = document.getString("email")
+                val email = document.getString("email").orEmpty()
                 val role = document.getString("role")
 
-                if (email.isNullOrBlank() || role.isNullOrBlank()) {
+                if (role.isNullOrBlank()) {
                     onResult(Result.failure(IllegalStateException("User profile is incomplete")))
                     return@addOnSuccessListener
                 }

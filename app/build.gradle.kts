@@ -1,12 +1,28 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.services)
     alias(libs.plugins.ksp)
 }
 
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { input ->
+        localProperties.load(input)
+    }
+}
+val facebookAppId = localProperties.getProperty("FACEBOOK_APP_ID", "0")
+val facebookClientToken = localProperties.getProperty("FACEBOOK_CLIENT_TOKEN", "0")
+
 android {
     namespace = "com.apetrovski.autoservicelog"
     compileSdk = 37
+
+    buildFeatures {
+        resValues = true
+    }
 
     defaultConfig {
         applicationId = "com.apetrovski.autoservicelog"
@@ -16,6 +32,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        resValue("string", "facebook_app_id", facebookAppId)
+        resValue("string", "facebook_client_token", facebookClientToken)
+        resValue("string", "fb_login_protocol_scheme", "fb$facebookAppId")
     }
 
     buildTypes {
@@ -51,6 +71,7 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.facebook.login)
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)

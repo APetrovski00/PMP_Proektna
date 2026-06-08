@@ -115,6 +115,9 @@
     <string name="google_login_failed">Најавата со Google не успеа</string>
     <string name="google_config_missing">Google најавата уште не е конфигурирана</string>
     <string name="google_account_type_message">Избери како ќе се користи овој Google акаунт.</string>
+    <string name="facebook_login_failed">Најавата со Facebook не успеа</string>
+    <string name="facebook_config_missing">Facebook најавата не е конфигурирана</string>
+    <string name="facebook_account_type_message">Избери како ќе се користи овој Facebook акаунт.</string>
     <string name="no_cars_yet">Нема додадени коли</string>
     <string name="load_cars_failed">Колите не може да се вчитаат</string>
     <string name="car_load_failed">Колата не може да се вчита</string>

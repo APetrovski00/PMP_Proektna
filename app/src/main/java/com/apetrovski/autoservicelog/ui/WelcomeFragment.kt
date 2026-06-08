@@ -1,5 +1,6 @@
 package com.apetrovski.autoservicelog.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -18,6 +19,11 @@ import androidx.navigation.fragment.findNavController
 import com.apetrovski.autoservicelog.R
 import com.apetrovski.autoservicelog.data.analytics.AppAnalytics
 import com.apetrovski.autoservicelog.data.auth.AuthRepository
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -26,11 +32,13 @@ import kotlinx.coroutines.launch
 class WelcomeFragment : Fragment(R.layout.screen_welcome) {
     private val authRepository = AuthRepository()
     private lateinit var credentialManager: CredentialManager
+    private lateinit var callbackManager: CallbackManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         credentialManager = CredentialManager.create(requireContext())
+        callbackManager = CallbackManager.Factory.create()
 
         val navController = findNavController()
         val emailLoginButton = view.findViewById<View>(R.id.emailLoginButton)
@@ -52,12 +60,22 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
         googleLoginButton.setOnClickListener {
             startGoogleLogin(authButtons)
         }
+        facebookLoginButton.setOnClickListener {
+            startFacebookLogin(authButtons)
+        }
         signupButton.setOnClickListener {
             navController.navigate(R.id.action_welcomeFragment_to_signupFragment)
         }
         anonymousLoginButton.setOnClickListener {
             startAnonymousLogin(authButtons)
         }
+        registerFacebookLoginCallback(authButtons)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun startAnonymousLogin(authButtons: List<View>) {
@@ -76,6 +94,60 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
                     showMessage(R.string.login_failed)
                 }
         }
+    }
+
+    private fun startFacebookLogin(authButtons: List<View>) {
+        if (!facebookConfigured()) {
+            showMessage(R.string.facebook_config_missing)
+            return
+        }
+
+        setButtonsEnabled(authButtons, false)
+        LoginManager.getInstance().logInWithReadPermissions(
+            this,
+            listOf("public_profile")
+        )
+    }
+
+    private fun registerFacebookLoginCallback(authButtons: List<View>) {
+        LoginManager.getInstance().registerCallback(
+            callbackManager,
+            object : FacebookCallback<LoginResult> {
+                override fun onSuccess(result: LoginResult) {
+                    authRepository.loginWithFacebook(result.accessToken.token) { authResult ->
+                        if (!isAdded) return@loginWithFacebook
+                        if (findNavController().currentDestination?.id != R.id.welcomeFragment) return@loginWithFacebook
+
+                        setButtonsEnabled(authButtons, true)
+                        authResult
+                            .onSuccess { profile ->
+                                if (profile == null) {
+                                    showAccountTypeDialog(
+                                        messageRes = R.string.facebook_account_type_message,
+                                        loginMethod = "facebook",
+                                        failureMessageRes = R.string.facebook_login_failed
+                                    )
+                                } else {
+                                    AppAnalytics.loginSuccess(requireContext(), "facebook", profile.role)
+                                    navigateForRole(profile.role)
+                                }
+                            }
+                            .onFailure {
+                                showMessage(R.string.facebook_login_failed)
+                            }
+                    }
+                }
+
+                override fun onCancel() {
+                    setButtonsEnabled(authButtons, true)
+                }
+
+                override fun onError(error: FacebookException) {
+                    setButtonsEnabled(authButtons, true)
+                    showMessage(R.string.facebook_login_failed)
+                }
+            }
+        )
     }
 
     private fun startGoogleLogin(authButtons: List<View>) {
@@ -173,6 +245,18 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
     }
 
     private fun showGoogleRoleDialog() {
+        showAccountTypeDialog(
+            messageRes = R.string.google_account_type_message,
+            loginMethod = "google",
+            failureMessageRes = R.string.google_login_failed
+        )
+    }
+
+    private fun showAccountTypeDialog(
+        messageRes: Int,
+        loginMethod: String,
+        failureMessageRes: Int
+    ) {
         val ownerCheckbox = CheckBox(requireContext()).apply {
             text = getString(R.string.owner)
         }
@@ -206,7 +290,7 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
             setPadding(dp(24), dp(8), dp(24), dp(8))
             addView(
                 TextView(requireContext()).apply {
-                    text = getString(R.string.google_account_type_message)
+                    text = getString(messageRes)
                     textSize = 16f
                 },
                 LinearLayout.LayoutParams(
@@ -252,11 +336,11 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
                 when {
                     ownerCheckbox.isChecked -> {
                         dialog.dismiss()
-                        saveGoogleRole(AuthRepository.ROLE_OWNER)
+                        saveSocialRole(AuthRepository.ROLE_OWNER, loginMethod, failureMessageRes)
                     }
                     mechanicCheckbox.isChecked -> {
                         dialog.dismiss()
-                        saveGoogleRole(AuthRepository.ROLE_MECHANIC)
+                        saveSocialRole(AuthRepository.ROLE_MECHANIC, loginMethod, failureMessageRes)
                     }
                     else -> showMessage(R.string.auth_choose_account_type)
                 }
@@ -267,7 +351,11 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
         dialog.show()
     }
 
-    private fun saveGoogleRole(role: String) {
+    private fun saveSocialRole(
+        role: String,
+        loginMethod: String,
+        failureMessageRes: Int
+    ) {
         authRepository.saveCurrentUserRole(role) { result ->
             if (!isAdded) return@saveCurrentUserRole
             if (findNavController().currentDestination?.id != R.id.welcomeFragment) return@saveCurrentUserRole
@@ -275,12 +363,12 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
             result
                 .onSuccess { profile ->
                     AppAnalytics.accountCreated(requireContext(), profile.role)
-                    AppAnalytics.loginSuccess(requireContext(), "google", profile.role)
+                    AppAnalytics.loginSuccess(requireContext(), loginMethod, profile.role)
                     navigateForRole(profile.role)
                 }
                 .onFailure {
                     authRepository.logout()
-                    showMessage(R.string.google_login_failed)
+                    showMessage(failureMessageRes)
                 }
         }
     }
@@ -303,6 +391,27 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
 
         if (resourceId == 0) return null
         return getString(resourceId)
+    }
+
+    private fun facebookConfigured(): Boolean {
+        val appId = configString("facebook_app_id")
+        val clientToken = configString("facebook_client_token")
+
+        return appId.isNotBlank() &&
+            clientToken.isNotBlank() &&
+            appId != "0" &&
+            clientToken != "0"
+    }
+
+    private fun configString(name: String): String {
+        val resourceId = resources.getIdentifier(
+            name,
+            "string",
+            requireContext().packageName
+        )
+
+        if (resourceId == 0) return ""
+        return getString(resourceId).trim()
     }
 
     private fun setButtonsEnabled(buttons: List<View>, enabled: Boolean) {
