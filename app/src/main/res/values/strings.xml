@@ -6,7 +6,7 @@
     <string name="login_email">Email and password</string>
     <string name="login_google">Continue with Google</string>
     <string name="login_facebook">Continue with Facebook</string>
-    <string name="login_anonymous">Anonymous login</string>
+    <string name="login_anonymous">Continue as guest</string>
     <string name="signup_email">Create account</string>
     <string name="owner_label">For car owners</string>
     <string name="mechanic_label">For mechanics</string>
@@ -144,7 +144,6 @@
     <string name="profile_email">Email: %1$s</string>
     <string name="profile_role">Account type: %1$s</string>
     <string name="logout">Log out</string>
-    <string name="anonymous_login_not_ready">Anonymous login will be added later</string>
     <string name="my_jobs">My jobs</string>
     <string name="no_jobs_yet">No jobs yet</string>
 </resources>

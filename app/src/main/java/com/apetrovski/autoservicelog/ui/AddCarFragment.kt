@@ -50,7 +50,7 @@ class AddCarFragment : Fragment(R.layout.screen_add_car) {
                     .onSuccess {
                         AppAnalytics.carAdded(requireContext())
                         showMessage(R.string.car_saved)
-                        findNavController().navigateUp()
+                        closeAfterSave()
                     }
                     .onFailure {
                         showMessage(R.string.save_car_failed)
@@ -100,6 +100,16 @@ class AddCarFragment : Fragment(R.layout.screen_add_car) {
             vin = vin,
             color = color
         )
+    }
+
+    private fun closeAfterSave() {
+        val navController = findNavController()
+        val previousDestinationId = navController.previousBackStackEntry?.destination?.id
+        if (previousDestinationId == R.id.welcomeFragment) {
+            navController.navigate(R.id.action_addCarFragment_to_ownerFragment)
+        } else {
+            navController.navigateUp()
+        }
     }
 
     private fun setButtonsEnabled(

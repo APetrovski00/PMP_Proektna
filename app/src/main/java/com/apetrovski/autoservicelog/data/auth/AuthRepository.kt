@@ -96,6 +96,50 @@ class AuthRepository(
             }
     }
 
+    fun loginAnonymously(
+        onResult: (Result<AuthUserProfile>) -> Unit
+    ) {
+        auth.signInAnonymously()
+            .addOnSuccessListener { result ->
+                val user = result.user
+                if (user == null) {
+                    onResult(Result.failure(IllegalStateException("User not found")))
+                    return@addOnSuccessListener
+                }
+
+                val profile = hashMapOf(
+                    "uid" to user.uid,
+                    "email" to "",
+                    "role" to ROLE_ANONYMOUS,
+                    "displayName" to ANONYMOUS_DISPLAY_NAME,
+                    "createdAt" to FieldValue.serverTimestamp(),
+                    "updatedAt" to FieldValue.serverTimestamp()
+                )
+
+                firestore.collection(USERS_COLLECTION)
+                    .document(user.uid)
+                    .set(profile)
+                    .addOnSuccessListener {
+                        onResult(
+                            Result.success(
+                                AuthUserProfile(
+                                    uid = user.uid,
+                                    email = "",
+                                    role = ROLE_ANONYMOUS,
+                                    displayName = ANONYMOUS_DISPLAY_NAME
+                                )
+                            )
+                        )
+                    }
+                    .addOnFailureListener { error ->
+                        onResult(Result.failure(error))
+                    }
+            }
+            .addOnFailureListener { error ->
+                onResult(Result.failure(error))
+            }
+    }
+
     fun saveCurrentUserRole(
         role: String,
         onResult: (Result<AuthUserProfile>) -> Unit

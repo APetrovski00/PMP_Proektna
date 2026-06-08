@@ -55,7 +55,25 @@ class WelcomeFragment : Fragment(R.layout.screen_welcome) {
             navController.navigate(R.id.action_welcomeFragment_to_signupFragment)
         }
         anonymousLoginButton.setOnClickListener {
-            showMessage(R.string.anonymous_login_not_ready)
+            startAnonymousLogin(authButtons)
+        }
+    }
+
+    private fun startAnonymousLogin(authButtons: List<View>) {
+        setButtonsEnabled(authButtons, false)
+        authRepository.loginAnonymously { result ->
+            if (!isAdded) return@loginAnonymously
+            if (findNavController().currentDestination?.id != R.id.welcomeFragment) return@loginAnonymously
+
+            setButtonsEnabled(authButtons, true)
+            result
+                .onSuccess { profile ->
+                    AppAnalytics.loginSuccess(requireContext(), "anonymous", profile.role)
+                    findNavController().navigate(R.id.action_welcomeFragment_to_addCarFragment)
+                }
+                .onFailure {
+                    showMessage(R.string.login_failed)
+                }
         }
     }
 

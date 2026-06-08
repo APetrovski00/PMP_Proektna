@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_welcomeFragment_to_mechanicFragment"
             app:destination="@id/mechanicFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_addCarFragment"
+            app:destination="@id/addCarFragment" />
     </fragment>
 
     <fragment
@@ -69,7 +72,13 @@
         android:id="@+id/addCarFragment"
         android:name="com.apetrovski.autoservicelog.ui.AddCarFragment"
         android:label="@string/add_car_screen_title"
-        tools:layout="@layout/screen_add_car" />
+        tools:layout="@layout/screen_add_car">
+        <action
+            android:id="@+id/action_addCarFragment_to_ownerFragment"
+            app:destination="@id/ownerFragment"
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/carDetailFragment"

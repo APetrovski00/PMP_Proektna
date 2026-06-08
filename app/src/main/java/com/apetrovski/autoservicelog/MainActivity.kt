@@ -127,6 +127,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun shouldShowHeader(): Boolean {
         return lastDestinationId == R.id.ownerFragment ||
+            lastDestinationId == R.id.addCarFragment ||
             lastDestinationId == R.id.mechanicFragment ||
             lastDestinationId == R.id.carDetailFragment ||
             lastDestinationId == R.id.worksheetDetailFragment ||
