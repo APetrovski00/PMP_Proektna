@@ -2,7 +2,6 @@
     <string name="app_name">AutoServiceLog</string>
     <string name="welcome_title">AutoServiceLog</string>
     <string name="welcome_subtitle">Service history for car owners and mechanics.</string>
-    <string name="welcome_body">Log repairs, add worksheet notes, and keep every car service record in one place.</string>
     <string name="login_email">Email and password</string>
     <string name="login_google">Continue with Google</string>
     <string name="login_facebook">Continue with Facebook</string>

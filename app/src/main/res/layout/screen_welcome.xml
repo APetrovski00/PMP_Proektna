@@ -45,16 +45,6 @@
                 android:text="@string/welcome_subtitle"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/bodyText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/welcome_body"
-                android:textSize="15sp" />
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/emailLoginButton"
                 style="?attr/materialButtonOutlinedStyle"

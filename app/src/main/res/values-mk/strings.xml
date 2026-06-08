@@ -2,7 +2,6 @@
     <string name="app_name">AutoServiceLog</string>
     <string name="welcome_title">AutoServiceLog</string>
     <string name="welcome_subtitle">Сервисна историја за сопственици и механичари.</string>
-    <string name="welcome_body">Запишувај поправки, додавај работни белешки и чувај ја секоја сервисна евиденција на едно место.</string>
     <string name="login_email">Е-пошта и лозинка</string>
     <string name="login_google">Продолжи со Google</string>
     <string name="login_facebook">Продолжи со Facebook</string>
@@ -135,7 +134,7 @@
     <string name="photo_select_failed">Сликата не може да се избере</string>
     <string name="photo_load_failed">Сликата не може да се вчита</string>
     <string name="profile">Профил</string>
-    <string name="jobs">Работи</string>
+    <string name="jobs">Поправки</string>
     <string name="header_separator">|</string>
     <string name="anonymous_user">Анонимен</string>
     <string name="profile_screen_title">Профил</string>
@@ -143,8 +142,8 @@
     <string name="profile_email">Е-пошта: %1$s</string>
     <string name="profile_role">Тип на акаунт: %1$s</string>
     <string name="logout">Одјави се</string>
-    <string name="my_jobs">Мои работи</string>
-    <string name="no_jobs_yet">Се уште нема работи</string>
+    <string name="my_jobs">Мои поправки</string>
+    <string name="no_jobs_yet">Се уште нема поправки</string>
     <string name="notification_channel_name">Известувања за работа</string>
     <string name="notification_work_started_title">Работата е започната</string>
     <string name="notification_work_started_body">Работата на твојата кола е започната.</string>
