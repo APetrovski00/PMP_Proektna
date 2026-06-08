@@ -13,8 +13,8 @@ if (localPropertiesFile.exists()) {
         localProperties.load(input)
     }
 }
-val facebookAppId = localProperties.getProperty("FACEBOOK_APP_ID", "0")
-val facebookClientToken = localProperties.getProperty("FACEBOOK_CLIENT_TOKEN", "0")
+val facebookAppId = localProperties.getProperty("FACEBOOK_APP_ID", "1412227127593311")
+val facebookClientToken = localProperties.getProperty("FACEBOOK_CLIENT_TOKEN", "4047fb0d800e19311d269fcacab5ef17")
 
 android {
     namespace = "com.apetrovski.autoservicelog"
