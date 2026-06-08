@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "77538872073-mhm3vtfeie5rfistug6doipq9beccejs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apetrovski.autoservicelog",
+            "certificate_hash": "2fbaae7d7b5ffc89d5ff684c7b3036469975b80b"
+          }
+        },
+        {
           "client_id": "77538872073-oggssgb4b0cngf6gfdoicdb0aciho4pc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
